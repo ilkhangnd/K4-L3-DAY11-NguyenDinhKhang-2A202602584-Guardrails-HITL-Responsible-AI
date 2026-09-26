@@ -24,6 +24,12 @@ from core.config import ALLOWED_TOPICS, BLOCKED_TOPICS
 InputStatus = Literal["ALLOW", "BLOCK"]
 
 
+def _normalize_topic_text(value: str) -> str:
+    """Case-fold Vietnamese text so config keywords work with or without accents."""
+    decomposed = unicodedata.normalize("NFD", value.casefold())
+    return "".join(char for char in decomposed if not unicodedata.combining(char))
+
+
 # ============================================================
 # Implement detect_injection()
 #
@@ -96,13 +102,13 @@ def topic_filter(user_input: str) -> InputStatus:
         ``"BLOCK"`` = chặn (off-topic hoặc topic cấm).
         ``"ALLOW"`` = cho qua (câu banking hợp lệ).
     """
-    input_lower = user_input.casefold()
+    input_lower = _normalize_topic_text(user_input)
 
     # Deny wins when a message mixes an allowed banking phrase with a prohibited
     # request, e.g. "banking advice on how to hack an account".
-    if any(topic.casefold() in input_lower for topic in BLOCKED_TOPICS):
+    if any(_normalize_topic_text(topic) in input_lower for topic in BLOCKED_TOPICS):
         return "BLOCK"
-    if not any(topic.casefold() in input_lower for topic in ALLOWED_TOPICS):
+    if not any(_normalize_topic_text(topic) in input_lower for topic in ALLOWED_TOPICS):
         return "BLOCK"
     return "ALLOW"
 

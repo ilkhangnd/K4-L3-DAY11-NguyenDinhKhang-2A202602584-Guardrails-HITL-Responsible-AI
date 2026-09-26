@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#005a87" />
+    <title>VinBank Secure Assistant</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="Trạng thái bảo mật">
+        <div class="brand"><span class="brand-mark">V</span><span>VINBANK</span></div>
+        <div class="environment"><span class="pulse"></span><span>BLUE TEAM · LIVE DEMO</span></div>
+
+        <section class="security-card">
+          <p class="eyebrow">DEFENSE IN DEPTH</p>
+          <h2>Blue guardrails</h2>
+          <ol class="pipeline">
+            <li><span>01</span> Rate limiter</li>
+            <li><span>02</span> Input guardrail</li>
+            <li><span>03</span> Blue LLM</li>
+            <li><span>04</span> Output redaction</li>
+          </ol>
+        </section>
+
+        <section class="side-note">
+          <strong>Private by design</strong>
+          <p>API key chỉ nằm ở backend local. Trình duyệt không nhận hoặc lưu key.</p>
+        </section>
+      </aside>
+
+      <section class="chat-panel">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">VINBANK CUSTOMER SERVICE</p>
+            <h1>Secure banking assistant</h1>
+          </div>
+          <div id="connection" class="connection pending">Đang kiểm tra kết nối…</div>
+        </header>
+
+        <div id="messages" class="messages" aria-live="polite">
+          <article class="message assistant welcome">
+            <div class="avatar">VB</div>
+            <div class="bubble">
+              <p>Chào bạn, tôi là trợ lý VinBank. Tôi hỗ trợ các câu hỏi về tài khoản, chuyển tiền, tiết kiệm, khoản vay và thẻ tín dụng.</p>
+              <small>Blue guardrails đang hoạt động.</small>
+            </div>
+          </article>
+        </div>
+
+        <section class="suggestions" aria-label="Gợi ý câu hỏi">
+          <button data-prompt="Tôi muốn kiểm tra số dư tài khoản.">Kiểm tra số dư</button>
+          <button data-prompt="Lãi suất tiết kiệm kỳ hạn 12 tháng là bao nhiêu?">Lãi suất tiết kiệm</button>
+          <button data-prompt="Làm thế nào để chuyển tiền sang tài khoản khác?">Chuyển tiền</button>
+        </section>
+
+        <div id="guardrail-status" class="guardrail-status neutral">
+          <span class="status-dot"></span>
+          <span>Ready — tin nhắn sẽ đi qua các lớp bảo vệ trước khi được trả lời.</span>
+        </div>
+
+        <form id="chat-form" class="composer">
+          <label class="sr-only" for="message-input">Tin nhắn của bạn</label>
+          <textarea id="message-input" rows="1" maxlength="3000" placeholder="Nhập câu hỏi về dịch vụ VinBank…"></textarea>
+          <button id="send-button" type="submit"><span>Gửi</span><span aria-hidden="true">↑</span></button>
+        </form>
+        <p class="disclaimer">Demo học thuật · không nhập thông tin tài khoản, mật khẩu hoặc dữ liệu cá nhân thật.</p>
+      </section>
+    </main>
+    <template id="message-template">
+      <article class="message"><div class="avatar"></div><div class="bubble"><p></p><small></small></div></article>
+    </template>
+    <script src="/app.js"></script>
+  </body>
+</html>
